@@ -131,8 +131,10 @@ class ConfigGUI:
         self.comment_listbox.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.comment_listbox.yview)
         
-        # 加载评论到列表
-        self.refresh_comment_list()
+        # 注意: 不在这里调用 refresh_comment_list()，因为 comment_count_label 还没创建
+        # 先手动加载评论到列表
+        for i, comment in enumerate(self.comments, 1):
+            self.comment_listbox.insert(tk.END, f"{i}. {comment}")
         
         # 评论管理按钮
         btn_frame = tk.Frame(main_frame)
@@ -267,7 +269,9 @@ class ConfigGUI:
         self.comment_listbox.delete(0, tk.END)
         for i, comment in enumerate(self.comments, 1):
             self.comment_listbox.insert(tk.END, f"{i}. {comment}")
-        self.comment_count_label.config(text=f"当前评论库共 {len(self.comments)} 条")
+        # 只有当 comment_count_label 存在时才更新
+        if hasattr(self, 'comment_count_label'):
+            self.comment_count_label.config(text=f"当前评论库共 {len(self.comments)} 条")
     
     def add_comment(self):
         """添加评论"""
