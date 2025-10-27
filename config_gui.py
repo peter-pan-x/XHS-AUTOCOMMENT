@@ -105,10 +105,7 @@ class ConfigGUI:
         self.interval_spinbox.pack(side=tk.LEFT)
         tk.Label(interval_frame, text="(建议 ≥ 55秒)", fg="gray").pack(side=tk.LEFT, padx=10)
         
-        # 初始化标签和绑定事件(必须在 interval_var 创建之后)
-        self.update_count_label()
-        self.count_var.trace("w", lambda *args: self.update_count_label())
-        self.interval_var.trace("w", lambda *args: self.update_risk_label())
+        # 注意: 不在这里调用 update_count_label()，因为 risk_label 还没创建
         
         # 4. 评论内容库
         tk.Label(main_frame, text="评论内容库:", font=("Arial", 11, "bold")).grid(
@@ -187,7 +184,14 @@ class ConfigGUI:
             font=("Arial", 10, "bold")
         )
         self.risk_label.grid(row=6, column=0, columnspan=2, pady=10)
+        
+        # 现在所有组件都创建完成，可以安全调用初始化函数
+        self.update_count_label()
         self.update_risk_label()
+        
+        # 绑定变化监听
+        self.count_var.trace("w", lambda *args: self.update_count_label())
+        self.interval_var.trace("w", lambda *args: self.update_risk_label())
         
         # 底部按钮
         bottom_frame = tk.Frame(self.root, bg="#f5f5f5", pady=15)
