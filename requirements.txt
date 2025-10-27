@@ -1,0 +1,33 @@
+# ============================================================
+# 小红书自动评论脚本 - Python依赖列表
+# ============================================================
+
+# 核心依赖
+undetected-chromedriver>=3.5.0
+selenium>=4.15.0
+
+# 标准库依赖 (通常已内置,无需安装)
+# time
+# random
+# os
+# pickle
+# sqlite3
+# sys
+# platform
+# subprocess
+# datetime
+# urllib
+
+# ============================================================
+# 安装说明:
+# 方法1: 使用一键安装脚本
+#   双击运行 install_dependencies.bat
+#
+# 方法2: 手动安装
+#   pip install -r requirements.txt
+#
+# 方法3: 单独安装
+#   pip install undetected-chromedriver
+#   pip install selenium
+# ============================================================
+
