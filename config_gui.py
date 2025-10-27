@@ -85,8 +85,6 @@ class ConfigGUI:
         
         self.count_label = tk.Label(count_frame, text="", fg="gray")
         self.count_label.pack(side=tk.LEFT, padx=10)
-        self.update_count_label()
-        self.count_var.trace("w", lambda *args: self.update_count_label())
         
         # 3. 评论间隔
         tk.Label(main_frame, text="评论间隔 (秒):", font=("Arial", 11, "bold")).grid(
@@ -106,6 +104,11 @@ class ConfigGUI:
         )
         self.interval_spinbox.pack(side=tk.LEFT)
         tk.Label(interval_frame, text="(建议 ≥ 55秒)", fg="gray").pack(side=tk.LEFT, padx=10)
+        
+        # 初始化标签和绑定事件(必须在 interval_var 创建之后)
+        self.update_count_label()
+        self.count_var.trace("w", lambda *args: self.update_count_label())
+        self.interval_var.trace("w", lambda *args: self.update_risk_label())
         
         # 4. 评论内容库
         tk.Label(main_frame, text="评论内容库:", font=("Arial", 11, "bold")).grid(
